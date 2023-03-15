@@ -32,7 +32,6 @@ namespace CourseManagmentSystem.Controllers
             {
                 // Creating new Student
                 
-
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
                 // Create new User with secured password

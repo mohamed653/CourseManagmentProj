@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseManagmentSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230315155901_sync")]
-    partial class sync
+    [Migration("20230315164932_CategoryCreate_")]
+    partial class CategoryCreate_
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,28 @@ namespace CourseManagmentSystem.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("CourseManagmentSystem.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Categories");
+                });
 
             modelBuilder.Entity("CourseManagmentSystem.Models.Instructor", b =>
                 {
@@ -287,6 +309,15 @@ namespace CourseManagmentSystem.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
+            modelBuilder.Entity("CourseManagmentSystem.Models.Category", b =>
+                {
+                    b.HasOne("CourseManagmentSystem.Models.Category", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Parent");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -347,6 +378,11 @@ namespace CourseManagmentSystem.Migrations
                     b.HasOne("CourseManagmentSystem.Models.Student", null)
                         .WithOne("User")
                         .HasForeignKey("CourseManagmentSystem.Models.ApplicationUser", "StudentId");
+                });
+
+            modelBuilder.Entity("CourseManagmentSystem.Models.Category", b =>
+                {
+                    b.Navigation("Children");
                 });
 
             modelBuilder.Entity("CourseManagmentSystem.Models.Instructor", b =>

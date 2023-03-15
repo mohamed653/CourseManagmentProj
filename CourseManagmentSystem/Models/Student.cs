@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CourseManagmentSystem.Models
 {
@@ -7,6 +8,7 @@ namespace CourseManagmentSystem.Models
         [Key]
         public int Id { get; set; }
         public string? Language { get; set; }
+
         public virtual ApplicationUser User { get; set; }
     }
 }
