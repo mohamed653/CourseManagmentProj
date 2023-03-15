@@ -5,6 +5,6 @@ namespace CourseManagmentSystem.Models
     public class ApplicationUser:IdentityUser
     {
         public int? InstructorId { get; set; }
-        public int? StudentId { get; set; }
+        public virtual ICollection<Course>? Courses { get; set; }
     }
 }

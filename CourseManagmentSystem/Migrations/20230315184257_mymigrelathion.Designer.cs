@@ -4,6 +4,7 @@ using CourseManagmentSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseManagmentSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230315184257_mymigrelathion")]
+    partial class mymigrelathion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,6 +85,9 @@ namespace CourseManagmentSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("VideoUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -90,34 +95,6 @@ namespace CourseManagmentSystem.Migrations
                     b.HasIndex("InstructorId");
 
                     b.ToTable("Course");
-                });
-
-            modelBuilder.Entity("CourseManagmentSystem.Models.CourseLesson", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VideoUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("CourseLesson");
                 });
 
             modelBuilder.Entity("CourseManagmentSystem.Models.Instructor", b =>
@@ -401,17 +378,6 @@ namespace CourseManagmentSystem.Migrations
                     b.Navigation("Instructor");
                 });
 
-            modelBuilder.Entity("CourseManagmentSystem.Models.CourseLesson", b =>
-                {
-                    b.HasOne("CourseManagmentSystem.Models.Course", "Course")
-                        .WithMany("CourseLessons")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -475,11 +441,6 @@ namespace CourseManagmentSystem.Migrations
                     b.Navigation("Children");
 
                     b.Navigation("Courses");
-                });
-
-            modelBuilder.Entity("CourseManagmentSystem.Models.Course", b =>
-                {
-                    b.Navigation("CourseLessons");
                 });
 
             modelBuilder.Entity("CourseManagmentSystem.Models.Instructor", b =>

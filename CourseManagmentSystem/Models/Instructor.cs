@@ -11,6 +11,7 @@ namespace CourseManagmentSystem.Models
         public string? ProfilePicUrl { get; set; }
 
         public virtual ApplicationUser User { get; set; }
+        public virtual ICollection< Course>? Courses{ get; set; }
 
     }
 }

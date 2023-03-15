@@ -10,9 +10,10 @@ namespace CourseManagmentSystem.Data
         {
 
         }
-        public DbSet<Student> Students { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Category> Courses { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

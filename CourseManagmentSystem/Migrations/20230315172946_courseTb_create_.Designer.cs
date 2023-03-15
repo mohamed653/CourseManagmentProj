@@ -4,6 +4,7 @@ using CourseManagmentSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseManagmentSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230315172946_courseTb_create_")]
+    partial class courseTb_create_
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +23,6 @@ namespace CourseManagmentSystem.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ApplicationUserCourse", b =>
-                {
-                    b.Property<string>("ApplicationUsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("CoursesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ApplicationUsersId", "CoursesId");
-
-                    b.HasIndex("CoursesId");
-
-                    b.ToTable("ApplicationUserCourse");
-                });
 
             modelBuilder.Entity("CourseManagmentSystem.Models.Category", b =>
                 {
@@ -56,7 +43,7 @@ namespace CourseManagmentSystem.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("CourseManagmentSystem.Models.Course", b =>
@@ -66,9 +53,6 @@ namespace CourseManagmentSystem.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -83,41 +67,14 @@ namespace CourseManagmentSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("InstructorId");
-
-                    b.ToTable("Course");
-                });
-
-            modelBuilder.Entity("CourseManagmentSystem.Models.CourseLesson", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("VideoUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("InstructorId");
 
-                    b.ToTable("CourseLesson");
+                    b.ToTable("Course");
                 });
 
             modelBuilder.Entity("CourseManagmentSystem.Models.Instructor", b =>
@@ -140,6 +97,25 @@ namespace CourseManagmentSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Instructors");
+                });
+
+            modelBuilder.Entity("CourseManagmentSystem.Models.Student", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Language")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -353,26 +329,18 @@ namespace CourseManagmentSystem.Migrations
                     b.Property<int?>("InstructorId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
                     b.HasIndex("InstructorId")
                         .IsUnique()
                         .HasFilter("[InstructorId] IS NOT NULL");
 
+                    b.HasIndex("StudentId")
+                        .IsUnique()
+                        .HasFilter("[StudentId] IS NOT NULL");
+
                     b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("ApplicationUserCourse", b =>
-                {
-                    b.HasOne("CourseManagmentSystem.Models.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("ApplicationUsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CourseManagmentSystem.Models.Course", null)
-                        .WithMany()
-                        .HasForeignKey("CoursesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CourseManagmentSystem.Models.Category", b =>
@@ -386,30 +354,11 @@ namespace CourseManagmentSystem.Migrations
 
             modelBuilder.Entity("CourseManagmentSystem.Models.Course", b =>
                 {
-                    b.HasOne("CourseManagmentSystem.Models.Category", "Category")
-                        .WithMany("Courses")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CourseManagmentSystem.Models.Instructor", "Instructor")
                         .WithMany("Courses")
                         .HasForeignKey("InstructorId");
 
-                    b.Navigation("Category");
-
                     b.Navigation("Instructor");
-                });
-
-            modelBuilder.Entity("CourseManagmentSystem.Models.CourseLesson", b =>
-                {
-                    b.HasOne("CourseManagmentSystem.Models.Course", "Course")
-                        .WithMany("CourseLessons")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -468,24 +417,27 @@ namespace CourseManagmentSystem.Migrations
                     b.HasOne("CourseManagmentSystem.Models.Instructor", null)
                         .WithOne("User")
                         .HasForeignKey("CourseManagmentSystem.Models.ApplicationUser", "InstructorId");
+
+                    b.HasOne("CourseManagmentSystem.Models.Student", null)
+                        .WithOne("User")
+                        .HasForeignKey("CourseManagmentSystem.Models.ApplicationUser", "StudentId");
                 });
 
             modelBuilder.Entity("CourseManagmentSystem.Models.Category", b =>
                 {
                     b.Navigation("Children");
-
-                    b.Navigation("Courses");
-                });
-
-            modelBuilder.Entity("CourseManagmentSystem.Models.Course", b =>
-                {
-                    b.Navigation("CourseLessons");
                 });
 
             modelBuilder.Entity("CourseManagmentSystem.Models.Instructor", b =>
                 {
                     b.Navigation("Courses");
 
+                    b.Navigation("User")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CourseManagmentSystem.Models.Student", b =>
+                {
                     b.Navigation("User")
                         .IsRequired();
                 });
