@@ -19,6 +19,7 @@ namespace CourseManagmentSystem.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
@@ -26,6 +27,7 @@ namespace CourseManagmentSystem.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
@@ -61,6 +63,7 @@ namespace CourseManagmentSystem.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
 
@@ -68,17 +71,26 @@ namespace CourseManagmentSystem.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+            // Check if the model state is valid.
             if (ModelState.IsValid)
             {
-               var result= await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,false);
+                // Attempt to sign in the user using the SignInManager's PasswordSignInAsync method.
+                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+
+                // If the sign in attempt was successful, redirect the user to the home page.
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
                 }
+
+                // If the sign in attempt failed, add an error to the model state indicating an invalid login attempt.
                 ModelState.AddModelError("", "Invalid Login Attempt");
             }
+
+            // Return the view for the login page, passing in the current model.
             return View(model);
         }
 

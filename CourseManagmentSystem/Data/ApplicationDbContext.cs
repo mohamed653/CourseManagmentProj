@@ -1,6 +1,7 @@
 ﻿using CourseManagmentSystem.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using CourseManagmentSystem.ViewModels;
 
 namespace CourseManagmentSystem.Data
 {
@@ -12,7 +13,7 @@ namespace CourseManagmentSystem.Data
         }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Category> Courses { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -20,6 +21,12 @@ namespace CourseManagmentSystem.Data
             base.OnModelCreating(modelBuilder);
 
         }
+
+
+        public DbSet<CourseManagmentSystem.ViewModels.CoursesViewModel>? CoursesViewModel { get; set; }
+
+
+        public DbSet<CourseManagmentSystem.Models.Course>? Course { get; set; }
 
     }
 }

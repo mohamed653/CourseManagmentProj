@@ -1,4 +1,6 @@
-﻿using CourseManagmentSystem.Models;
+﻿using CourseManagmentSystem.Data;
+using CourseManagmentSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -12,16 +14,17 @@ namespace CourseManagmentSystem.Controllers
         {
             _logger = logger;
         }
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
-
+        
         public IActionResult Privacy()
         {
             return View();
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

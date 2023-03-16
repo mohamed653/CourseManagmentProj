@@ -16,6 +16,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddMvc(options =>
+{
+    var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+    options.Filters.Add(new AuthorizeFilter(policy));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
