@@ -23,10 +23,5 @@ namespace CourseManagmentSystem.Data
         }
 
 
-        public DbSet<CourseManagmentSystem.ViewModels.CoursesViewModel>? CoursesViewModel { get; set; }
-
-
-        public DbSet<CourseManagmentSystem.Models.Course>? Course { get; set; }
-
     }
 }

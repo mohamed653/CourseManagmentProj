@@ -63,6 +63,20 @@ namespace CourseManagmentSystem.Controllers
         }
 
         [HttpGet]
+        public IActionResult RegisterAsInstructor()
+        {
+            return View();
+        }
+
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> RegisterAsInstructor()
+        //{
+
+        //    return null;
+        //}
+
+        [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()
         {
@@ -72,8 +86,9 @@ namespace CourseManagmentSystem.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel model)
-        {
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        {     
             // Check if the model state is valid.
             if (ModelState.IsValid)
             {
@@ -83,7 +98,16 @@ namespace CourseManagmentSystem.Controllers
                 // If the sign in attempt was successful, redirect the user to the home page.
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        returnUrl = Url.Content("~/");
+                        return LocalRedirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                   
                 }
 
                 // If the sign in attempt failed, add an error to the model state indicating an invalid login attempt.

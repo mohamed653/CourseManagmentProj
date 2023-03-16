@@ -1,4 +1,6 @@
 ﻿using Microsoft.Build.Framework;
+using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace CourseManagmentSystem.Models
 {
@@ -6,6 +8,7 @@ namespace CourseManagmentSystem.Models
     {
         public int Id { get; set; }
 
+        [Display(Name = "Category Name")]
         public string Name { get; set; } = null!;
 
         public int? ParentId { get; set; }
