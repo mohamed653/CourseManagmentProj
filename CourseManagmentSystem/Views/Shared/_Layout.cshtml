@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿
+@inject SignInManager<ApplicationUser> signInManager;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,22 +31,40 @@
             </div>
         </form>
         <!-- Navbar-->
+      
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white -mr-auto" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+            </li>
+            @if (signInManager.IsSignedIn(User))
+            {
+                <li class="nav-item">
+                    <form asp-action="Logout" asp-controller="Account" method="post">
+                        <button type="submit" class="nav-link btn btn-link pt-2" style="width:auto ; color:white">
+                            <b>Logout </b>   @User.Identity?.Name
+                        </button>
+                    </form>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-white -mr-auto" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                </li>
+            }
+            
+        </ul>
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#!">Settings</a></li>
                     <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                    <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    @*<li><hr class="dropdown-divider" /></li>*@
+                    <li><a class="dropdown-item" href="#!">Language</a></li>
                 </ul>
             </li>
 
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link text-white -mr-auto" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
-            </li>
         </ul>
     </nav>
     <div id="layoutSidenav">
