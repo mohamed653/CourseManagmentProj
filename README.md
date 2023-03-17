@@ -18,7 +18,7 @@ Once you have these installed, you can follow these steps to set up the system:
 5. Open the Package Manager Console and run the following command to create the database:
 sql
 
-```copy code```
+```
 Add-Migration
 ```
 
