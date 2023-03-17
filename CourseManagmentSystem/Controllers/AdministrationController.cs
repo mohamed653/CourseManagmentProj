@@ -134,41 +134,40 @@ namespace CourseManagmentSystem.Controllers
             }
             return View(model);
         }
-        [HttpPost]
-        public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel>model,string id)
+        [HttpPost] 
+        public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string id) 
         {
             var role = await roleManager.FindByIdAsync(id);
-            if (role == null)
+            if (role == null) 
             {
-                ViewBag.ErrorMessage = $"Role with id ={id} cannot be found";
+                ViewBag.ErrorMessage = $"Role with id ={id} cannot be found"; 
                 return View("NotFound");
             }
-            for (int i = 0; i < model.Count; i++)
+            for (int i = 0; i < model.Count; i++) 
             {
-                var user = await userManager.FindByIdAsync(model[i].UserId);
-                IdentityResult result;
-                if (model[i].IsSelected && !(await userManager.IsInRoleAsync(user,role.Name)))
+                var user = await userManager.FindByIdAsync(model[i].UserId); // retrieves the user with the specified id using the userManager object
+                IdentityResult result; 
+                if (model[i].IsSelected && !(await userManager.IsInRoleAsync(user, role.Name))) // checks if the user is selected and not already in the role
                 {
-                   result = await  userManager.AddToRoleAsync(user, role.Name);
+                    result = await userManager.AddToRoleAsync(user, role.Name); // adds the user to the role 
                 }
-                else if (!model[i].IsSelected &&(await userManager.IsInRoleAsync(user, role.Name)))
+                else if (!model[i].IsSelected && (await userManager.IsInRoleAsync(user, role.Name))) // checks if the user is not selected and already in the role
                 {
-                    result = await userManager.RemoveFromRoleAsync(user, role.Name);
+                    result = await userManager.RemoveFromRoleAsync(user, role.Name); // removes the user from the role 
                 }
                 else
                 {
-                    continue;
+                    continue; // skip
                 }
-                if (result.Succeeded)
+                if (result.Succeeded) // checks if the operation was successful
                 {
                     if (i < model.Count - 1)
-                        continue;
+                        continue; // skip
                     else
-                        return RedirectToAction("EditRole", new { Id = id });
+                        return RedirectToAction("EditRole", new { Id = id }); // redirects to the EditRole action with the specified id
                 }
             }
-
-            return RedirectToAction("EditRole", new { Id = id });
+            return RedirectToAction("EditRole", new { Id = id }); // redirects to the EditRole action with the specified id
         }
 
     }
