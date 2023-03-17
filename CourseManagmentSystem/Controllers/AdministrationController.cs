@@ -20,6 +20,43 @@ namespace CourseManagmentSystem.Controllers
             this.roleManager = roleManager;
             this.userManager = userManager;
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult ListUsers(string? message)
+        {
+            var users= userManager.Users.ToList();
+            ViewBag.Message = message;
+            return View(users);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(ApplicationUser model,string id)
+        {
+            string message = string.Empty;
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByIdAsync(id);
+
+                var result = await userManager.DeleteAsync(user);
+                
+                if (result.Succeeded)
+                {
+                    message = "User deleted successfuly.";
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    message = "cannot delete User ! .";
+                }
+            }
+            return RedirectToAction("ListUsers", "Administration",message);
+        }
+
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult CreateRole()

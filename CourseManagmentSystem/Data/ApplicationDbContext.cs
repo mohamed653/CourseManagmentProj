@@ -23,5 +23,8 @@ namespace CourseManagmentSystem.Data
         }
 
 
+        public DbSet<CourseManagmentSystem.Models.CourseLesson>? CourseLesson { get; set; }
+
+
     }
 }

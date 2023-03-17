@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+    ViewData["Title"] = "ListUsers";
+}
+
+<h1 class="text-center mb-4">ListUsers</h1>
+
+<!-- Add a parent div element around the table -->
+<div class="container">
+
+    <!-- Add bootstrap classes to the table element -->
+    <table class="table table-bordered mx-auto w-auto">
+
+        <!-- The rest of the table code remains unchanged -->
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+
+                    <td>
+                        <form method="post" asp-action="DeleteUser" asp-route-id="@item.Id">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <button type="submit" class="btn btn-outline-danger p-2 ">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+        <a asp-action="ListRoles" class="btn btn-primary" style=" width:auto"> Back To Roles List </a>
+    </div>
+
+</div>
+<script>
+    // Get the message
+    var message = "@ViewBag.Message";
+
+    // Display the alert
+    if (message) {
+        // Display the alert
+        alert(message);
+    }
+
+</script>

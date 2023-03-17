@@ -2557,6 +2557,7 @@ textarea.form-control-lg {
   margin-right: 1rem;
 }
 
+
 .btn-check {
   position: absolute;
   clip: rect(0, 0, 0, 0);
@@ -3007,6 +3008,9 @@ textarea.form-control-lg {
   z-index: 3;
 }
 
+
+
+
 .btn {
   display: inline-block;
   font-weight: 400;
@@ -3032,8 +3036,11 @@ textarea.form-control-lg {
     transition: none;
   }
 }
+
 .btn:hover {
-  color: #212529;
+    color: #212529;
+    transform: scale(1.1);
+    background-color: red;
 }
 .btn-check:focus + .btn, .btn:focus {
   outline: 0;
