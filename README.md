@@ -19,6 +19,10 @@ Once you have these installed, you can follow these steps to set up the system:
 sql
 
 ```
+Add-Migration
+```
+
+```
 Update-Database
 ```
 6. Run the application in Visual Studio.
@@ -45,5 +49,22 @@ The following technologies were used in the development of the course management
 - Code First approach
 - Identity Framework
 
+## Application Identity Framework Explaination
+This application has been designed to provide an enhanced user experience through the use of roles and privileges.
+
+- In this application, every registered user will not automatically have the role of "user". Instead, they will have the option to request the role of "instructor" by filling out a form with additional information. Once the form has been submitted, an administrator will review the request and decide whether or not to grant the user the role of "instructor".
+
+- Users who are granted the role of "instructor" will have additional privileges in the system. Specifically, they will be able to add and modify courses within the system.
+
+- Overall, the Application Identity Framework provides a flexible and powerful system for managing user roles and privileges. Whether you are a registered user or an administrator, this system will help you get the most out of your experience.
+ 
+ ## Features
+ 1. 
+ 2.
+ 3.
+ ## Extra Features
+ - 
+ - 
+ 
 ## Contributing
  Contributions to the course management system are welcome. To contribute, please fork the repository, make your changes, and submit a pull request.
