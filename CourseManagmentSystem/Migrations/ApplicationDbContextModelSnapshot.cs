@@ -34,7 +34,7 @@ namespace CourseManagmentSystem.Migrations
 
                     b.HasIndex("CoursesId");
 
-                    b.ToTable("ApplicationUserCourse");
+                    b.ToTable("ApplicationUserCourse", (string)null);
                 });
 
             modelBuilder.Entity("CourseManagmentSystem.Models.Category", b =>
@@ -56,7 +56,7 @@ namespace CourseManagmentSystem.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("CourseManagmentSystem.Models.Course", b =>
@@ -89,7 +89,7 @@ namespace CourseManagmentSystem.Migrations
 
                     b.HasIndex("InstructorId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("CourseManagmentSystem.Models.CourseLesson", b =>
@@ -117,7 +117,7 @@ namespace CourseManagmentSystem.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("CourseLesson");
+                    b.ToTable("CourseLesson", (string)null);
                 });
 
             modelBuilder.Entity("CourseManagmentSystem.Models.Instructor", b =>
@@ -139,7 +139,7 @@ namespace CourseManagmentSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Instructors");
+                    b.ToTable("Instructors", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -87,7 +87,7 @@ namespace CourseManagmentSystem.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl)
         {     
             // Check if the model state is valid.
             if (ModelState.IsValid)
