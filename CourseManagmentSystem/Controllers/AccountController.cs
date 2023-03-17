@@ -117,6 +117,12 @@ namespace CourseManagmentSystem.Controllers
             // Return the view for the login page, passing in the current model.
             return View(model);
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
 
     }
 }

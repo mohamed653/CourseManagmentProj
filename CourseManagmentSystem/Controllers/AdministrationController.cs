@@ -1,5 +1,6 @@
 ﻿using CourseManagmentSystem.Models;
 using CourseManagmentSystem.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using System.Security.AccessControl;
 
 namespace CourseManagmentSystem.Controllers
 {
+    
     public class AdministrationController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -18,11 +20,13 @@ namespace CourseManagmentSystem.Controllers
             this.roleManager = roleManager;
             this.userManager = userManager;
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult CreateRole()
         {
             return View();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
@@ -45,13 +49,14 @@ namespace CourseManagmentSystem.Controllers
             }
             return View(model);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult ListRoles()
         {
             var Roles = roleManager.Roles.ToList();
             return View(Roles);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> EditRole(string id)
         {
@@ -77,7 +82,7 @@ namespace CourseManagmentSystem.Controllers
                 return View(model);
             }
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
@@ -103,6 +108,7 @@ namespace CourseManagmentSystem.Controllers
                 return View(model);
             }
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> EditUsersInRole(string id)
         {
@@ -134,6 +140,7 @@ namespace CourseManagmentSystem.Controllers
             }
             return View(model);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost] 
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string id) 
         {

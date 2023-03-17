@@ -1,5 +1,4 @@
-﻿
-@inject SignInManager<ApplicationUser> signInManager;
+﻿@inject SignInManager<ApplicationUser> signInManager;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,8 +34,16 @@
             </div>
         </form>
         <!-- Navbar-->
-      
+
         <ul class="navbar-nav ml-auto">
+            @if (signInManager.IsSignedIn(User)&& User.IsInRole("Admin"))
+            {
+                ViewBag.currentRole = "Admin";
+                <li class="nav-item">
+                    <a class="nav-link text-white -mr-auto" asp-controller="Administration" asp-action="ListRoles">Admin Panel</a>
+                </li>
+            }
+
             <li class="nav-item">
                 <a class="nav-link text-white -mr-auto" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
             </li>
@@ -56,7 +63,7 @@
                     <a class="nav-link text-white -mr-auto" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                 </li>
             }
-            
+
         </ul>
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
@@ -143,7 +150,10 @@
                     @{
                         // here assign global variable for role name with defaultvalue user
                         var roleName = "User";
-                        
+                        if (ViewBag.currentRole!=null)
+                        {
+                            roleName = ViewBag.currentRole;
+                        }
                     }
                     <div class="small">Logged in as: @roleName</div>
 

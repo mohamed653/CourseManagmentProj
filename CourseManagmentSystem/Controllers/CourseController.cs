@@ -1,4 +1,5 @@
 ﻿using CourseManagmentSystem.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CourseManagmentSystem.Controllers
@@ -14,6 +15,11 @@ namespace CourseManagmentSystem.Controllers
         {
             IEnumerable<Models.Course> courses = _context.Courses.ToList();
             return View(courses);
+        }
+        [Authorize(Roles ="Instructor,Admin")]
+        public IActionResult Create()
+        {
+            return View();
         }
     }
 }
