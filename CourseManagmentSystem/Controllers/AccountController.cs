@@ -45,7 +45,7 @@ namespace CourseManagmentSystem.Controllers
             if (ModelState.IsValid)
             {
                 // Creating new Student
-                
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
                 // Create new User with secured password
@@ -75,7 +75,7 @@ namespace CourseManagmentSystem.Controllers
             // create new instance of RegisterAsInstructorViewModel 
             RegisterAsInstructorViewModel model = new RegisterAsInstructorViewModel
             {
-                Id= currentUser.Id,
+                Id = currentUser.Id,
                 Email = currentUser.Email
             };
 
@@ -101,9 +101,9 @@ namespace CourseManagmentSystem.Controllers
                 // Save the model to the database using Entity Framework or any other ORM of your choice
                 var Instructor = new Instructor()
                 {
-                    Name= model.Name,
-                    Description=model.Description,
-                    Website=model.Website,
+                    Name = model.Name,
+                    Description = model.Description,
+                    Website = model.Website,
                     ProfilePic = model.ProfilePic,
                     User = currentUser
                 };
@@ -119,7 +119,6 @@ namespace CourseManagmentSystem.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
-
             return View();
         }
 
@@ -127,7 +126,7 @@ namespace CourseManagmentSystem.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl)
-        {     
+        {
             // Check if the model state is valid.
             if (ModelState.IsValid)
             {
@@ -146,7 +145,7 @@ namespace CourseManagmentSystem.Controllers
                     {
                         return RedirectToAction("Index", "Home");
                     }
-                   
+
                 }
 
                 // If the sign in attempt failed, add an error to the model state indicating an invalid login attempt.
