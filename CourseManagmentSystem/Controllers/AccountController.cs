@@ -130,7 +130,7 @@ namespace CourseManagmentSystem.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl)
+        public async Task<IActionResult> Login(LoginViewModel model, string? id)
         {
             
 
@@ -143,10 +143,11 @@ namespace CourseManagmentSystem.Controllers
                 // If the sign in attempt was successful, redirect the user to the home page.
                 if (result.Succeeded)
                 {
-                    if (!string.IsNullOrEmpty(returnUrl))
+                    if (!string.IsNullOrEmpty(id))
                     {
-                        returnUrl = Url.Content("~/");
-                        return LocalRedirect(returnUrl);
+                        string cleanUrl = id.Replace("%2F", "/");
+                        
+                        return LocalRedirect(cleanUrl);
                     }
                     else
                     {
