@@ -10,8 +10,6 @@ namespace CourseManagmentSystem.ViewModels
         [EmailAddress]
         [Display(Name ="Confirmed Email")]
         public string? Email { get; set; }
-        [Required]
-        public string? Name { get; set; }
        
         [Display(Name = "Give us description about yourself, skills and experience")]
         public string? Description { get; set; }

@@ -12,21 +12,25 @@ namespace CourseManagmentSystem.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly ApplicationDbContext context;
 
         public AccountController(UserManager<ApplicationUser> userManager,
                                 SignInManager<ApplicationUser> signInManager,
-                                ApplicationDbContext context)
+                                ApplicationDbContext context,
+                                RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.context = context;
+            this.roleManager = roleManager;
         }
 
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
+            
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
@@ -46,7 +50,7 @@ namespace CourseManagmentSystem.Controllers
             {
                 // Creating new Student
 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
 
                 // Create new User with secured password
                 var result = await userManager.CreateAsync(user, model.Password);
@@ -68,6 +72,7 @@ namespace CourseManagmentSystem.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles ="Instructor")]
         public async Task<IActionResult> RegisterAsInstructor()
         {
             // get the current user signed in.
@@ -83,6 +88,7 @@ namespace CourseManagmentSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Instructor")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterAsInstructor(RegisterAsInstructorViewModel model, IFormFile file)
         {
@@ -99,15 +105,14 @@ namespace CourseManagmentSystem.Controllers
             {
                 var currentUser = await userManager.GetUserAsync(User);
                 // Save the model to the database using Entity Framework or any other ORM of your choice
-                var Instructor = new Instructor()
+                var Instructor = new Instructor
                 {
-                    Name = model.Name,
                     Description = model.Description,
                     Website = model.Website,
                     ProfilePic = model.ProfilePic,
                     User = currentUser
                 };
-                var result = await context.Instructors.AddAsync(Instructor);
+                await context.Instructors.AddAsync(Instructor);
                 await context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
             }
@@ -127,11 +132,13 @@ namespace CourseManagmentSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl)
         {
+            
+
             // Check if the model state is valid.
             if (ModelState.IsValid)
             {
                 // Attempt to sign in the user using the SignInManager's PasswordSignInAsync method.
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                var result = await signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
 
                 // If the sign in attempt was successful, redirect the user to the home page.
                 if (result.Succeeded)
@@ -153,6 +160,7 @@ namespace CourseManagmentSystem.Controllers
             }
 
             // Return the view for the login page, passing in the current model.
+           
             return View(model);
         }
         [HttpGet]
