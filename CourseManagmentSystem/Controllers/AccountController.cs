@@ -1,8 +1,10 @@
-﻿using CourseManagmentSystem.Models;
+﻿using CourseManagmentSystem.Data;
+using CourseManagmentSystem.Models;
 using CourseManagmentSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CourseManagmentSystem.Controllers
 {
@@ -10,12 +12,15 @@ namespace CourseManagmentSystem.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly ApplicationDbContext context;
 
         public AccountController(UserManager<ApplicationUser> userManager,
-                                SignInManager<ApplicationUser> signInManager)
+                                SignInManager<ApplicationUser> signInManager,
+                                ApplicationDbContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.context = context;
         }
 
         [HttpPost]
@@ -63,18 +68,52 @@ namespace CourseManagmentSystem.Controllers
         }
 
         [HttpGet]
-        public IActionResult RegisterAsInstructor()
+        public async Task<IActionResult> RegisterAsInstructor()
         {
-            return View();
+            // get the current user signed in.
+            var currentUser = await userManager.GetUserAsync(User);
+            // create new instance of RegisterAsInstructorViewModel 
+            RegisterAsInstructorViewModel model = new RegisterAsInstructorViewModel
+            {
+                Id= currentUser.Id,
+                Email = currentUser.Email
+            };
+
+            return View(model);
         }
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public async Task<IActionResult> RegisterAsInstructor()
-        //{
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterAsInstructor(RegisterAsInstructorViewModel model, IFormFile file)
+        {
+            if (file != null && file.Length > 0)
+            {
+                var profilePic = new byte[file.Length];
+                using (var reader = new BinaryReader(file.OpenReadStream()))
+                {
+                    profilePic = reader.ReadBytes((int)file.Length);
+                }
+                model.ProfilePic = profilePic;
+            }
+            if (ModelState.IsValid)
+            {
+                var currentUser = await userManager.GetUserAsync(User);
+                // Save the model to the database using Entity Framework or any other ORM of your choice
+                var Instructor = new Instructor()
+                {
+                    Name= model.Name,
+                    Description=model.Description,
+                    Website=model.Website,
+                    ProfilePic = model.ProfilePic,
+                    User = currentUser
+                };
+                var result = await context.Instructors.AddAsync(Instructor);
+                await context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
 
-        //    return null;
-        //}
+            return View(model);
+        }
 
         [HttpGet]
         [AllowAnonymous]
