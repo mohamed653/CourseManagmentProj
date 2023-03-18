@@ -40,12 +40,14 @@ The course management system allows for the following features:
 The following technologies were used in the development of the course management system:
 
 - ASP.NET Core
+- C#
+- Entity Framework core
+- Microsoft SQL Server
 - HTML
 - CSS
 - Bootstrap
 - JavaScript
 - Ajax
-- Microsoft SQL Server
 - Code First approach
 - Identity Framework
 
