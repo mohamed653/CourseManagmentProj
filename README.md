@@ -65,7 +65,7 @@ This application has been designed to provide an enhanced user experience throug
  2.
  3.
  ## Extra Features
- - 
+ - Admin Panel for product owner
  - 
  
 ## Contributing
