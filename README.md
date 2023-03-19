@@ -61,7 +61,7 @@ This application has been designed to provide an enhanced user experience throug
 - Overall, the Application Identity Framework provides a flexible and powerful system for managing user roles and privileges. Whether you are a registered user or an administrator, this system will help you get the most out of your experience.
  
  ## Features
- 1. 
+ 1. List And Watch Courses
  2.
  3.
  ## Extra Features
