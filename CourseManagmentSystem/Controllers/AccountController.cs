@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Xml.Linq;
 
 namespace CourseManagmentSystem.Controllers
 {
@@ -72,7 +73,6 @@ namespace CourseManagmentSystem.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles ="Instructor")]
         public async Task<IActionResult> RegisterAsInstructor()
         {
             // get the current user signed in.
@@ -105,14 +105,15 @@ namespace CourseManagmentSystem.Controllers
             {
                 var currentUser = await userManager.GetUserAsync(User);
                 // Save the model to the database using Entity Framework or any other ORM of your choice
-                var Instructor = new Instructor
+                var instructor = new Instructor
                 {
                     Description = model.Description,
                     Website = model.Website,
                     ProfilePic = model.ProfilePic,
                     User = currentUser
                 };
-                await context.Instructors.AddAsync(Instructor);
+                //currentUser.Instructor= instructor;
+                await context.Instructors.AddAsync(instructor);
                 await context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
             }
@@ -170,6 +171,7 @@ namespace CourseManagmentSystem.Controllers
         {
             return View();
         }
+
 
     }
 }

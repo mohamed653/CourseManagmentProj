@@ -1,5 +1,5 @@
 ﻿@inject SignInManager<ApplicationUser> signInManager;
-
+@inject UserManager<ApplicationUser> userManager;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,15 +36,29 @@
         <!-- Navbar-->
 
         <ul class="navbar-nav ml-auto">
+
+            @{
+                var _img = ViewBag.ProfilePic;
+                if (_img!=null)
+                {
+                
+                <li class="nav-item">
+                    <a class="nav-link text-white -mr-auto">
+
+                        <img src="data:image/png;base64,@Convert.ToBase64String(_img)" alt="Profile Picture" id="your-image-container" style="width:40px;height:40px;border-radius:50%" />
+                    </a>
+                </li>
+                }
+            }
             <li class="nav-item">
                 <a class="nav-link text-white -mr-auto">
-                    @if (@User.Identity?.Name!=null)
+                    @if (@User.Identity?.Name != null)
                     {
-                       <b>Hello</b> @User.Identity.Name 
+                        <b>Hello</b> @User.Identity.Name
                     }
-                    </a>
+                </a>
             </li>
-            
+
 
             @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
             {
@@ -75,13 +89,13 @@
                     @*<li><hr class="dropdown-divider" /></li>*@
                     @if (signInManager.IsSignedIn(User))
                     {
-                    <form asp-action="Logout" asp-controller="Account" method="post">
+                        <form asp-action="Logout" asp-controller="Account" method="post">
                         <li>
                             <button type="submit" class="dropdown-item">
-                                Logout   
+                                Logout
                             </button>
                         </li>
-                    </form>
+                        </form>
                     }
                 </ul>
             </li>
@@ -186,7 +200,6 @@
             </footer>
         </div>
     </div>
-
 
     <!-- Chart.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" crossorigin="anonymous">
