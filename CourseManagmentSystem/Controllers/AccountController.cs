@@ -31,7 +31,7 @@ namespace CourseManagmentSystem.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
-            
+
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
@@ -77,18 +77,24 @@ namespace CourseManagmentSystem.Controllers
         {
             // get the current user signed in.
             var currentUser = await userManager.GetUserAsync(User);
+            var currentInstructor = GetInstructorByUser();
             // create new instance of RegisterAsInstructorViewModel 
             RegisterAsInstructorViewModel model = new RegisterAsInstructorViewModel
             {
                 Id = currentUser.Id,
-                Email = currentUser.Email
+                Email = currentUser.Email,
+                
             };
+            if (currentInstructor != null)
+            {
+                model.Description = currentUser.Instructor?.Description;
+                model.Website = currentUser.Instructor?.Website;
+            }
 
             return View(model);
         }
 
         [HttpPost]
-        [Authorize(Roles = "Instructor")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterAsInstructor(RegisterAsInstructorViewModel model, IFormFile file)
         {
@@ -110,6 +116,7 @@ namespace CourseManagmentSystem.Controllers
                     Description = model.Description,
                     Website = model.Website,
                     ProfilePic = model.ProfilePic,
+                    IsRequested = true,
                     User = currentUser
                 };
                 //currentUser.Instructor= instructor;
@@ -133,7 +140,7 @@ namespace CourseManagmentSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string? id)
         {
-            
+
 
             // Check if the model state is valid.
             if (ModelState.IsValid)
@@ -147,7 +154,7 @@ namespace CourseManagmentSystem.Controllers
                     if (!string.IsNullOrEmpty(id))
                     {
                         string cleanUrl = id.Replace("%2F", "/");
-                        
+
                         return LocalRedirect(cleanUrl);
                     }
                     else
@@ -162,7 +169,7 @@ namespace CourseManagmentSystem.Controllers
             }
 
             // Return the view for the login page, passing in the current model.
-           
+
             return View(model);
         }
         [HttpGet]
@@ -172,6 +179,13 @@ namespace CourseManagmentSystem.Controllers
             return View();
         }
 
+
+        public async Task<Instructor> GetInstructorByUser()
+        {
+            var currentUser = await userManager.GetUserAsync(User);
+            var instrucor = context.Instructors?.FirstOrDefault(i => i.Id == currentUser.InstructorId);
+            return instrucor;
+        }
 
     }
 }

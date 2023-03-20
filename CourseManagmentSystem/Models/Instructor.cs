@@ -8,6 +8,7 @@ namespace CourseManagmentSystem.Models
         public int Id { get; set; }
         public string? Description { get; set; }
         public string? Website { get; set; }
+        public bool IsRequested { get; set; } =false;
         public byte[] ProfilePic{ get; set; }
 
         public virtual ApplicationUser User { get; set; }

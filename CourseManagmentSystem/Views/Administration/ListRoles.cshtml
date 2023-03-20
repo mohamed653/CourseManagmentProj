@@ -3,6 +3,7 @@
     ViewBag.Title = "Roles";
 }
 <h1 class="text-center mb-4">Admin Panel</h1>
+<div class="container-fluid m-2">
 @if(Model.Any()){
     foreach (var item in Model)
     {
@@ -23,14 +24,12 @@
     }
 }
 
-    <div class="card">
+    <div class="card mt-4">
         <div class="card-header">
             No Roles Have been Created Yet !
+            Use the button below to create a role
         </div>
         <div class="card-body">
-            <h5 class="card-title">
-                Use the button below to create a role
-            </h5>
             <a class="btn btn-primary" style="width:auto" asp-action="CreateRole" asp-controller="Administration">
             Create Role    
             </a>
@@ -40,4 +39,4 @@
 <div class="d-flex justify-content-center">
     <a asp-action="ListUsers" class="btn btn-primary  " style=" width:auto"> User List </a>
 </div>
-
+</div>
