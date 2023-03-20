@@ -7,7 +7,7 @@ To run the course management system, you will need to have the following install
 
 * Visual Studio 2019 or later
 * .NET Core SDK 3.1 or later
-* Microsoft SQL Server 2017 or later
+* Microsoft SQL Server 2014 or later
 
 Once you have these installed, you can follow these steps to set up the system:
 
@@ -16,7 +16,7 @@ Once you have these installed, you can follow these steps to set up the system:
 3. Build the solution to restore any missing packages.
 4. In the appsettings.json file, update the connection string to match your SQL Server configuration.
 5. Open the Package Manager Console and run the following command to create the database:
-sql
+
 
 ```
 Add-Migration
