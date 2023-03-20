@@ -65,8 +65,9 @@ This application has been designed to provide an enhanced user experience throug
  2. Edit Create Courses For the instructor
  3.
  ## Extra Features
- - Admin Panel for product owner that allow him to 
- - 
+ Admin Panel for product owner that allow him:
+ - Delete User Accounts 
+ - Edit Thier Roles and Privlages
  
 ## Contributing
  Contributions to the course management system are welcome. To contribute, please fork the repository, make your changes, and submit a pull request.
