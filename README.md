@@ -63,7 +63,7 @@ This application has been designed to provide an enhanced user experience throug
  ## Features
  1. List And Watch Courses for the average user
  2. Edit Create Courses For the instructor
- 3. Giving Comments
+ 3. Giving Comments and review for each course
  ## Extra Features
  Admin Panel for product owner that allow him:
  - Delete User Accounts 
