@@ -7,7 +7,7 @@ To run the course management system, you will need to have the following install
 
 * Visual Studio 2019 or later
 * .NET Core SDK 3.1 or later
-* Microsoft SQL Server 2017 or later
+* Microsoft SQL Server 2014 or later
 
 Once you have these installed, you can follow these steps to set up the system:
 
@@ -16,7 +16,7 @@ Once you have these installed, you can follow these steps to set up the system:
 3. Build the solution to restore any missing packages.
 4. In the appsettings.json file, update the connection string to match your SQL Server configuration.
 5. Open the Package Manager Console and run the following command to create the database:
-sql
+
 
 ```
 Add-Migration
@@ -48,6 +48,7 @@ The following technologies were used in the development of the course management
 - Bootstrap
 - JavaScript
 - Ajax
+-Jquery
 - Code First approach
 - Identity Framework
 
@@ -61,12 +62,13 @@ This application has been designed to provide an enhanced user experience throug
 - Overall, the Application Identity Framework provides a flexible and powerful system for managing user roles and privileges. Whether you are a registered user or an administrator, this system will help you get the most out of your experience.
  
  ## Features
- 1. List And Watch Courses
- 2.
- 3.
+ 1. List And Watch Courses for the average user
+ 2. Edit Create Courses For the instructor
+ 3. Giving Comments and review for each course
  ## Extra Features
- - Admin Panel for product owner
- - 
+ Admin Panel for product owner that allow him:
+ - Delete User Accounts 
+ - Edit Thier Roles and Privileges 
  
 ## Contributing
  Contributions to the course management system are welcome. To contribute, please fork the repository, make your changes, and submit a pull request.
