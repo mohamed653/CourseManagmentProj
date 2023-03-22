@@ -8,6 +8,7 @@ namespace CourseManagmentSystem.Models
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name="Course Name")]
         public string Name { get; set; } = null!;
         public DateTime CreationDate { get; set; }
         public string? Description { get; set; }
