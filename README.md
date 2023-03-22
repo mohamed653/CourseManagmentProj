@@ -48,6 +48,7 @@ The following technologies were used in the development of the course management
 - Bootstrap
 - JavaScript
 - Ajax
+-Jquery
 - Code First approach
 - Identity Framework
 
